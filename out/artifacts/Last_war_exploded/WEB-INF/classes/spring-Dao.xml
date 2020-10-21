@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--    关联数据库配置文件-->
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <!--        //最大,最小连接数-->
+        <property name="maxPoolSize" value="30"/>
+        <property name="minPoolSize" value="10"/>
+        <!--        关闭连接后不自动提交-->
+        <property name="autoCommitOnClose" value="false"/>
+        <!--        获取链接超时时间-->
+        <property name="checkoutTimeout" value="10000"/>
+        <!--        当前连接失败重试次数-->
+        <property name="acquireRetryAttempts" value="2"/>
+
+    </bean>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--        获取数据源-->
+        <property name="dataSource" ref="datasource"/>
+        <!--        绑定配置文件-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--        映射文件-->
+        <property name="plugins">
+        <!--   分页插件-->
+        <array>
+            <bean class="com.github.pagehelper.PageHelper">
+                <property name="properties">
+                    <value>
+                        <!-- 你使用的数据库类型 -->
+                        dialect=mysql
+                        reasonable=true
+                    </value>
+                </property>
+            </bean>
+        </array>
+    </property>
+
+    </bean>
+
+    <!-- 自动把com.dao包下面的mapper接口 交给spring容器管理  mapper接口和配置文件名称要一致 -->
+        <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+
+
+    <!--        注入sqlSessionFactory-->
+            <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+            <!-- 自动把com.zy.dao包下面的mapper接口 交给spring容器管理  mapper接口和配置文件名称要一致 -->
+            <property name="basePackage" value="com.zy.Dao"/>
+
+        </bean>
+
+
+</beans>

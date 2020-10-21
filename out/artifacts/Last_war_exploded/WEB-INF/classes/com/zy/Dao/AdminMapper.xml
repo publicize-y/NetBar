@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.Dao.AdminMapper">
+
+    <select id="login" resultType="admin">
+
+        select  * from admin where username =#{username} and password =#{password}
+
+    </select>
+
+    <select id="selectAdminByid" parameterType="int" resultType="admin">
+
+        select  * from admin where id =#{id}
+
+    </select>
+
+    <select id="getalladmin" resultType="admin">
+
+        select * from admin
+
+    </select>
+
+    <update id="updateAdminByid" >
+
+            update  admin set password= #{password} where id=#{id}
+
+    </update>
+
+    <delete id="deleteAdminByid">
+
+        delete from admin where id=#{id}
+
+    </delete>
+
+    <select id="selectcodeByusername" resultType="admin"  >
+
+        select  * from admin where username =#{username}
+
+    </select>
+
+</mapper>

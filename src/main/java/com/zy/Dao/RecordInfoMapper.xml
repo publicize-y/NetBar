@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.Dao.RecordInfoMapper">
+
+   <insert id="insertrecord" parameterType="SurfInfo" useGeneratedKeys="true" keyProperty="id" >
+
+    
+    insert into record (idnumber,realname,createtime,exittime,computerid) values
+
+     (#{idnumber},#{realname},#{createtime},#{exittime},#{computerid})
+
+   </insert>
+
+
+    <update id="updatemoneybyId" >
+
+        update record set usemoney = #{usemoney} where id = #{id}
+
+    </update>
+
+    <update id="updatemoneybyIdnumber" >
+
+        update record set usemoney = #{usemoney} where idnumber = #{idnumber}
+
+    </update>
+
+    <select id="getAllRecord" resultType="recordinfo">
+
+        select * from record
+        
+    </select>
+    
+    <delete id="deleteRecordbyId">
+
+        delete  from record where id =#{id}
+
+    </delete>
+
+    <select id="getRecordbylike" resultType="recordinfo" parameterType="string">
+
+        select * from record where realname like "%"#{realname}"%"
+
+    </select>
+
+</mapper>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.Dao.VipMapper">
+
+<sql id="vipinfo">
+    <trim suffixOverrides=",">
+        <if test="idnumber!=null">idnumber,</if>
+        <if test="password!=null">password,</if>
+        <if test="realname!=null">realname,</if>
+        <if test="sex!=null">sex,</if>
+        <if test="age!=null">age,</if>
+        <if test="address!=null">address,</if>
+        <if test="phonenumber!=null">phonenumber,</if>
+        <if test="facecode!=null">facecode,</if>
+        <if test="money!=null">money</if>
+    </trim>
+
+</sql>
+
+    <sql id="vipinfovalue">
+        <trim suffixOverrides=",">
+            <if test="idnumber!=null">#{idnumber},</if>
+            <if test="password!=null">#{password},</if>
+            <if test="realname!=null">#{realname},</if>
+            <if test="sex!=null">#{sex},</if>
+            <if test="age!=null">#{age},</if>
+            <if test="address!=null">#{address},</if>
+            <if test="phonenumber!=null">#{phonenumber},</if>
+            <if test="facecode!=null">#{facecode},</if>
+            <if test="money!=null">#{money}</if>
+        </trim>
+
+    </sql>
+
+    <select id="selectVipByid" parameterType="int" resultType="vip">
+        select  * from vip where id =#{id}
+
+    </select>
+
+    <select id="selectVipByidnumber" resultType="vip">
+
+        select  * from vip where idnumber =#{idnumber}
+
+    </select>
+
+    <select id="getallVip" resultType="vip">
+        select * from vip
+    </select>
+
+    <update id="updateVipByid" >
+            update  vip set idnumber = #{idnumber} ,money=#{money}, password= #{password} ,realname = #{realname},
+                sex = #{sex}, age=#{age}, address=#{address} ,phonenumber =#{phonenumber}
+            where id=#{id}
+    </update>
+
+    <delete id="deleteVipByid">
+        delete from vip where id=#{id}
+    </delete>
+
+    <insert id="addVip" parameterType="vip">
+        insert  into vip (<include refid="vipinfo"></include>) values
+        (<include refid="vipinfovalue"></include>)
+    </insert>
+
+    <select id="getVipbylike" resultType="vip" parameterType="string">
+        select * from vip where realname like "%"#{realname}"%"
+    </select>
+    
+    <update id="updatemoney"  >
+
+        update vip set money =money + #{money} where idnumber =#{idnumber}
+
+    </update>
+
+    <update id="updatemoney1"  >
+
+        update vip set money =money - #{money} where idnumber =#{idnumber}
+
+    </update>
+
+    <select id="selectMoneybyIdnumber" resultType="int">
+
+        select money from  vip where  idnumber =#{idnumber}
+
+    </select>
+
+    <select id="viplogin" resultType="vip">
+
+        select  * from vip where idnumber =#{idnumber} and password =#{password}
+
+    </select>
+
+    <update id="updateVipPasswordByid" >
+
+            update  vip set password= #{password} where id=#{id}
+
+    </update>
+
+</mapper>

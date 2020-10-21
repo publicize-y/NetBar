@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.Dao.SurfInfoMapper">
+    <select id="getall" resultType="surfinfo">
+
+        select * from surf
+
+    </select>
+
+    <insert id="gonet">
+
+        insert into surf (idnumber,realname,money)
+        select idnumber,realname,money from vip  where idnumber=#{idnumber}
+
+    </insert>
+
+    <update id="updatecomputerid">
+
+        update  surf set computerid = #{computerid} where idnumber=#{idnumber}
+
+    </update>
+
+    <select id="selectSurfinfoByIdnumber" resultType="surfinfo">
+
+        select  * from surf where idnumber = #{idnumber}
+
+    </select>
+
+    <select id="selectSurfinfoByComputerid" resultType="surfinfo">
+
+        select  * from surf where computerid = #{computerid}
+
+    </select>
+
+    <update id="updateExittime">
+
+        update  surf set exittime = #{exittime} where id=#{id}
+
+    </update>
+
+    <update id="updateExittimeByvip">
+
+        update  surf set exittime = #{exittime} where idnumber=#{idnumber}
+
+    </update>
+
+    <select id="selectSurfinfoByid" resultType="surfinfo">
+
+        select * from surf where id =#{id}
+
+    </select>
+
+
+    <delete id="deleteSurfInfoByid">
+
+        delete  from surf where id =#{id}
+
+    </delete>
+
+    <delete id="deleteSurfInfoByidnumber">
+
+        delete  from surf where idnumber =#{idnumber}
+
+    </delete>
+
+
+    <select id="selectinfobyIdnumber" resultType="SurfInfo">
+
+        select idnumber,realname,createtime,exittime,computerid from surf
+
+    where idnumber = #{idnumber}
+
+    </select>
+
+    <update id="updatemoney"  >
+
+        update surf set money =money + #{money} where idnumber =#{idnumber}
+
+    </update>
+
+
+</mapper>
